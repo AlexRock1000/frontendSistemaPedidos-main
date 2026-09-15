@@ -1,3 +1,4 @@
+from http.client import HTTPException
 from fastapi import FastAPI
 
 app = FastAPI(title="Cardapio Digital")
@@ -14,3 +15,10 @@ def listar_itens():
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+@app.get("/itens/{item_id}")
+def obter_item(item_id: int):
+    for item in cardapio:
+        if item["id"] == item_id:
+            return item
+    raise HTTPException(status_code=404, detail="Item não encontrado")
