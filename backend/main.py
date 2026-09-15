@@ -9,8 +9,14 @@ cardapio = [
 ]
 
 @app.get("/itens")
-def listar_itens():
-    return cardapio
+def listar_itens(categoria: str | None = None):  # texto ou nada; padrão None
+    if categoria is None:                         # não veio ?categoria= na URL
+        return cardapio
+    filtrados = []
+    for item in cardapio:
+        if item["categoria"] == categoria:
+            filtrados.append(item)
+    return filtrados
 
 @app.get("/health")
 def health():
