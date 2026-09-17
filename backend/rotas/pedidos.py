@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from esquemas.pedido import PedidoSaida
 
 router = APIRouter()
 
@@ -18,6 +19,6 @@ pedidos = [
 ]
 
 
-@router.get("/")
+@router.get("/", response_model=list[PedidoSaida])
 def listar_pedidos():
 	return pedidos
