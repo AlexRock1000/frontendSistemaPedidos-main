@@ -4,8 +4,7 @@ const arredondar = (valor) => Math.round(valor * 100) / 100;
 
 // GET /status-pedido
 export function listarStatus() {
-  const status = lerTabela('statusPedido').sort((a, b) => a.ordem - b.ordem);
-  return responder(status);
+  return requisicao('/pedidos/status');
 }
 
 // GET /pedidos (mais recentes primeiro)
