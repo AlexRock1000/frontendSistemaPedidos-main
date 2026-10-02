@@ -3,7 +3,10 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from configuracao import obter_configuracao
 
 configuracao = obter_configuracao()
-engine = create_engine(configuracao["url_do_banco"])  # o motor
+engine = create_engine(
+    configuracao["url_do_banco"],
+    connect_args={"use_pure": True},
+)  # o motor
 Sessao = sessionmaker(bind=engine)   # cada Sessao() abre uma conversa
 
 
