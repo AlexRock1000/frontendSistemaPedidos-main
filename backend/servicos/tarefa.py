@@ -7,3 +7,7 @@ def listar():
 
 def buscar_por_id(tarefa_id: int):
     return repositorio_tarefa.buscar_por_id(tarefa_id)
+
+
+def salvar(dados: dict):
+    return repositorio_tarefa.salvar(dados)

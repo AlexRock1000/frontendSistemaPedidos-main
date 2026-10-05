@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status
 
-from esquemas.tarefa import TarefaSaida
+from esquemas.tarefa import TarefaEntrada, TarefaSaida
 from servicos import tarefa as servico_tarefa
 
 router = APIRouter()
@@ -9,6 +9,11 @@ router = APIRouter()
 @router.get("/", response_model=list[TarefaSaida])
 def listar():
     return servico_tarefa.listar()
+
+
+@router.post("/", response_model=TarefaSaida, status_code=status.HTTP_201_CREATED)
+def salvar(dados: TarefaEntrada):
+    return servico_tarefa.salvar(dados.model_dump())
 
 
 @router.get("/{tarefa_id}", response_model=TarefaSaida)
