@@ -7,8 +7,8 @@ router = APIRouter()
 
 
 @router.get("/", response_model=list[TarefaSaida])
-def listar():
-    return servico_tarefa.listar()
+def listar(situacao: str | None = None):
+    return servico_tarefa.listar(situacao)
 
 
 @router.post("/", response_model=TarefaSaida, status_code=status.HTTP_201_CREATED)
