@@ -1,4 +1,5 @@
 from repositorios import tarefa as repositorio_tarefa
+from servicos.excecoes import TarefaNaoEncontrada
 
 
 def listar(situacao: str | None = None):
@@ -9,7 +10,10 @@ def listar(situacao: str | None = None):
 
 
 def buscar_por_id(tarefa_id: int):
-    return repositorio_tarefa.buscar_por_id(tarefa_id)
+    tarefa = repositorio_tarefa.buscar_por_id(tarefa_id)
+    if tarefa is None:
+        raise TarefaNaoEncontrada()
+    return tarefa
 
 
 def salvar(dados: dict):

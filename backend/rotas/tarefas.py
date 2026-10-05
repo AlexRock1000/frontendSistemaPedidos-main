@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, status
 
 from esquemas.tarefa import TarefaEntrada, TarefaSaida
 from servicos import tarefa as servico_tarefa
@@ -18,7 +18,4 @@ def salvar(dados: TarefaEntrada):
 
 @router.get("/{tarefa_id}", response_model=TarefaSaida)
 def buscar_por_id(tarefa_id: int):
-    tarefa = servico_tarefa.buscar_por_id(tarefa_id)
-    if tarefa is None:
-        raise HTTPException(status_code=404, detail="Tarefa não encontrada")
-    return tarefa
+    return servico_tarefa.buscar_por_id(tarefa_id)

@@ -1,4 +1,5 @@
 from repositorios import item as repositorio_item
+from servicos.excecoes import ItemNaoEncontrado
 
 
 def listar_itens(categoria: str | None = None):
@@ -10,3 +11,10 @@ def listar_itens(categoria: str | None = None):
 
 def obter_item(item_id: int):
     return repositorio_item.obter_item(item_id)
+
+
+def validar_item(item_id: int):
+    item = repositorio_item.obter_item(item_id)
+    if item is None:
+        raise ItemNaoEncontrado()
+    return item

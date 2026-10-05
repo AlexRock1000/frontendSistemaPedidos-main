@@ -12,7 +12,4 @@ def listar_itens(categoria: str | None = None):
 
 @router.get("/{item_id}", response_model=ItemSaida)
 def obter_item(item_id: int):
-	item = servico_item.obter_item(item_id)
-	if item is not None:
-		return item
-	raise HTTPException(status_code=404, detail="Item não encontrado")
+	return servico_item.validar_item(item_id)

@@ -1,9 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.requests import Request
+from fastapi.responses import JSONResponse
 from configuracao import ENDERECOS_FRONTEND
 from rotas import itens, pedidos, saude, tarefas
+from servicos.excecoes import ErroDeRegra
 
 app = FastAPI(title="Cardapio Digital")
+
+
+@app.exception_handler(ErroDeRegra)
+async def tratar_erro_de_regra(request: Request, exc: ErroDeRegra):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": str(exc)},
+    )
 
 app.add_middleware(
     CORSMiddleware,

@@ -1,8 +1,9 @@
 from datetime import datetime, timezone
 
 from esquemas.pedido import PedidoEntrada
-from repositorios import item as repositorio_item
 from repositorios import pedido as repositorio_pedido
+from servicos import item as servico_item
+from servicos.excecoes import PedidoNaoEncontrado, StatusPedidoInvalido
 
 
 def listar_pedidos():
@@ -13,9 +14,7 @@ def listar_pedidos():
 def criar_pedido(pedido: PedidoEntrada):
     itens_pedido = []
     for item in pedido.itens:
-        produto = repositorio_item.obter_item(item.produtoId)
-        if produto is None:
-            return None
+        produto = servico_item.validar_item(item.produtoId)
         itens_pedido.append({
             "produtoId": produto["id"],
             "nome": produto["nome"],
@@ -48,9 +47,9 @@ def listar_status():
 def atualizar_status(pedido_id: int, dados: dict):
     pedido = repositorio_pedido.obter_pedido(pedido_id)
     if pedido is None:
-        return None
+        raise PedidoNaoEncontrado()
     if dados.get("status") not in {"recebido", "entregue"}:
-        return False
+        raise StatusPedidoInvalido()
     pedido["status"] = dados["status"]
     pedido["atualizadoEm"] = datetime.now(timezone.utc).isoformat()
     repositorio_pedido.atualizar_pedido(pedido)
