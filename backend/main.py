@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from configuracao import ENDERECOS_FRONTEND
-from rotas import itens, pedidos, saude
+from rotas import itens, pedidos, saude, tarefas
 
 app = FastAPI(title="Cardapio Digital")
 
@@ -15,5 +15,6 @@ app.add_middleware(
 
 app.include_router(itens.router, prefix="/itens", tags=["Cardápio"])
 app.include_router(pedidos.router, prefix="/pedidos", tags=["Pedidos"])
+app.include_router(tarefas.router, prefix="/tarefas", tags=["Tarefas"])
 app.include_router(saude.router, prefix="", tags=["Saúde"])
 
