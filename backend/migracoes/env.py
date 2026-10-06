@@ -3,12 +3,12 @@ from logging.config import fileConfig
 from pathlib import Path
 import sys
 
-from sqlalchemy import engine_from_config, pool
+from banco import Base, engine
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from configuracao import obter_configuracao
-from modelos.tarefa import Tarefa
+from modelos import tarefa  # noqa: F401
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -23,7 +23,7 @@ url_do_banco = obter_configuracao().get("url_do_banco")
 if url_do_banco:
     config.set_main_option("sqlalchemy.url", url_do_banco.replace("%", "%%"))
 
-target_metadata = Tarefa.metadata
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -62,11 +62,7 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
+    connectable = engine
 
     with connectable.connect() as connection:
         context.configure(
