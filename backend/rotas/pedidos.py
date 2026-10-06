@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, status
 
 from esquemas.pedido import PedidoEntrada, PedidoSaida
 from servicos import pedido as servico_pedido

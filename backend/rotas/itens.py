@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from esquemas.item import ItemSaida
 from servicos import item as servico_item
 

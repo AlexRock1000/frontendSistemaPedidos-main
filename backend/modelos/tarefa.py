@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Date, Integer, String
+from sqlalchemy import Column, Date, ForeignKey, Integer, String
 
 from banco import Base
 
@@ -12,4 +12,8 @@ class Tarefa(Base):
     prazo = Column(Date, nullable=False)
     situacao = Column(String(20), nullable=False)
     itens_feitos = Column(Integer, nullable=False)
-    solicitante_id = Column(Integer, nullable=False)
+    solicitante_id = Column(
+        Integer,
+        ForeignKey("solicitantes.id", name="fk_tarefas_solicitantes"),
+        nullable=False,
+    )
