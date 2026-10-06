@@ -7,9 +7,8 @@ from sqlalchemy import engine_from_config, pool
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from banco import Base
 from configuracao import obter_configuracao
-from modelos import tarefa  # noqa: F401
+from modelos.tarefa import Tarefa
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -24,7 +23,7 @@ url_do_banco = obter_configuracao().get("url_do_banco")
 if url_do_banco:
     config.set_main_option("sqlalchemy.url", url_do_banco.replace("%", "%%"))
 
-target_metadata = Base.metadata
+target_metadata = Tarefa.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

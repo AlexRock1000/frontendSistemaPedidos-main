@@ -10,7 +10,8 @@ app = FastAPI(title="Cardapio Digital")
 
 
 @app.exception_handler(ErroDeRegra)
-async def tratar_erro_de_regra(request: Request, exc: ErroDeRegra):
+def tratar_erro_de_regra(_request: Request, exc: ErroDeRegra):
+    _ = _request
     return JSONResponse(
         status_code=exc.status_code,
         content={"detail": str(exc)},
